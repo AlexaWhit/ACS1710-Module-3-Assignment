@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Compliments Results
+{% endblock %}
+
+{% block content %}
+
+<h3>Welcome, {{users_name}}!</h3>
+{% if wants_compliments == "yes" %}
+    <h4> Here are some words to describe you: </h4>
+    <ul>
+        {% for compliment in new_list %}
+            <li> {{compliment}} </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>Sorry, no compliments selected.</h3>
+{% endif %}
+{% endblock %}
+
