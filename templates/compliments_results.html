@@ -6,8 +6,14 @@ Compliments Results
 
 {% block content %}
 
-<!-- Your HTML code goes here! -->
-
-
-
+<h3>Welcome, {{users_name}}!</h3>
+{% if wants_compliments == "yes" %}
+    <ul>
+        {% for compliment in new_list %}
+            <li> {{compliment}} </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>Sorry, no compliments selected.</h3>
+{% endif %}
 {% endblock %}
