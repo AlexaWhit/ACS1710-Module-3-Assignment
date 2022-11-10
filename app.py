@@ -203,11 +203,13 @@ Register and make an API key for yourself.
 Set up dotenv, create a .env file and define a variable 
 API_KEY with a value that is the api key for your account. """
 
-API_KEY = os.getenv('API_KEY')
-print(API_KEY)
+# API_KEY = os.getenv('API_KEY')
+# print(API_KEY)
 
-TENOR_URL = 'https://api.tenor.com/v1/search'
+TENOR_URL = 'https://tenor.googleapis.com/v2/search'
 pp = PrettyPrinter(indent=4)
+
+API_KEY = 'AIzaSyDkD-PCei_T_xd2pehq8VhW9t5PXo7-tIs'
 
 @app.route('/gif_search', methods=['GET', 'POST'])
 def gif_search():
@@ -215,6 +217,8 @@ def gif_search():
     if request.method == 'POST':
         # TODO: Get the search query & number of GIFs requested by the user, store each as a 
         # variable
+        search_query = request.form.get('search_query')
+        num_gifs = int(request.form.get('quantity'))
 
         response = requests.get(
             TENOR_URL,
@@ -223,6 +227,10 @@ def gif_search():
                 # - 'q': the search query
                 # - 'key': the API key (defined above)
                 # - 'limit': the number of GIFs requested
+            'q': search_query,
+            'key': API_KEY,
+            'limit': num_gifs
+
             })
 
         gifs = json.loads(response.content).get('results')
@@ -236,7 +244,7 @@ def gif_search():
         # list of data. The media property contains a 
         # list of media objects. Get the gif and use it's 
         # url in your template to display the gif. 
-        # pp.pprint(gifs)
+        pp.pprint(gifs)
 
         return render_template('gif_search.html', **context)
     else:
